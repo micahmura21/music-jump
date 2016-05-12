@@ -12,10 +12,17 @@ var mainState = {
 	create: function(){
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		game.stage.backgroundColor = '#3498db';
+		game.renderer.renderSession.roundPixels = true;
+		game.load.image('player', 'assets/player.png');
+		this.player = game.add.sprite(game.width/8, game.height*(7/8), 'player');
+		game.physics.arcade.enable(this.player);
+		this.player.body.gravity.y = 500;
 		platforms = game.add.group();
     	platforms.enableBody = true;
-		var ground = platforms.create(0, game.world.height - 64, 'ground');
-    	ground.scale.setTo(4, 2);
+		var ground = platforms.create(0, game.world.height*(11/12), 'ground');
+    	ground.scale.setTo(4, 1);
+			game.physics.arcade.enable(platforms);
+			game.physics.arcade.collide(this.player, platforms);
     	ground.body.immovable = true;
 	},
 	update: function(){
