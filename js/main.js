@@ -13,7 +13,7 @@ var mainState = {
 		game.load.image('background', 'assets/background.png');
 		game.load.image('player', 'assets/player.png');
 		game.load.image('ground', 'assets/wallHorizontal.png');
-		game.load.image('obsticle', 'assets/wallVertical.png');
+		game.load.image('obstacle', 'assets/wallVertical.png');
 		//If you'd like to load music files, the format would look like this. game.load.audio('[name of music]', ['[location for music file]']);
 
 	},
@@ -53,12 +53,12 @@ var mainState = {
 		this.player.body.bounce.y = 0.2;
 		this.player.body.gravity.y = 600;
 
-		//This creates the first obsticle on the right side of the screen.
-		this.obsticle = game.add.sprite(700,game.world.height, 'obsticle');
-		this.obsticle.scale.setTo(1,0.2);
-		this.obsticle.anchor.setTo(0,1);
-		game.physics.arcade.enable(this.obsticle);
-		this.obsticle.body.immovable = true;
+		//This creates the first obstacle on the right side of the screen.
+		this.obstacle = game.add.sprite(700,game.world.height, 'obstacle');
+		this.obstacle.scale.setTo(1,0.2);
+		this.obstacle.anchor.setTo(0,1);
+		game.physics.arcade.enable(this.obstacle);
+		this.obstacle.body.immovable = true;
 
 		//This adds the scoreboard on the top left side of the screen.
 		scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -66,32 +66,32 @@ var mainState = {
 
 	update: function(){
 
-		//This is where the game engine recognizes collision betwen the player and the ground or the obsticle.
+		//This is where the game engine recognizes collision betwen the player and the ground or the obstacle.
 		game.physics.arcade.collide(this.player, this.ground);
-		game.physics.arcade.collide(this.player, this.obsticle);
+		game.physics.arcade.collide(this.player, this.obstacle);
 
 		//This will set the horizontal movement to zero.
 		this.player.body.velocity.x = 0;
 
 		//This will create a new wall if the old wall goes off the screen.
-		if (this.obsticle.x < 0) {
-			this.obsticle.kill();
-			this.obsticle = game.add.sprite(900,game.world.height, 'obsticle');
-			this.obsticle.scale.setTo(1,0.2);
-			this.obsticle.anchor.setTo(0,1);
-			game.physics.arcade.enable(this.obsticle);
-			this.obsticle.body.immovable = true;
+		if (this.obstacle.x < 0) {
+			this.obstacle.kill();
+			this.obstacle = game.add.sprite(900,game.world.height, 'obstacle');
+			this.obstacle.scale.setTo(1,0.2);
+			this.obstacle.anchor.setTo(0,1);
+			game.physics.arcade.enable(this.obstacle);
+			this.obstacle.body.immovable = true;
 		};
 
-		//This creates a place to add sound when the obsticle reaches the player.
-		if (this.obsticle.x < game.width/8) {
+		//This creates a place to add sound when the obstacle reaches the player.
+		if (this.obstacle.x < 20 && this.obstacle.x > 15) {
 			console.log("sound!");
-			//This is where you'd add a sound que when the obsticle reaches the player.
+			//This is where you'd add a sound que when the obstacle reaches the player.
 		}
 
-		//This will move the obsticle to the left if it is on the right side of the screen.
-		if (this.obsticle.x > 600) {
-			this.obsticle.x -= 0.05;
+		//This will move the obstacle to the left if it is on the right side of the screen.
+		if (this.obstacle.x > 600) {
+			this.obstacle.x -= 0.05;
 		};
 
 		//This allows the player to jump only if you press the space key and the player is touching the something at the bottom.
@@ -101,7 +101,7 @@ var mainState = {
 		};
 
 		//This will update the score if the player has not been pushed off the screen, and the wall has gone off the left side.
-		if (this.obsticle.x < 5 && this.player.x > 5){
+		if (this.obstacle.x < 5 && this.player.x > 5){
 			score++;
 			scoreText.text = 'score: ' + score;
 		};
@@ -109,7 +109,7 @@ var mainState = {
 		//This will tell you "You Lose!" if the player is pushed off the left side of the screen.
 		if (this.player.x < 0){
 			scoreText = game.add.text(350,200, 'You Lose!', {fill: '#ff0000'});
-			this.obsticle.kill();
+			this.obstacle.kill();
 			this.player.kill();
 		};
 	}
