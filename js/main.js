@@ -4,6 +4,7 @@ var spaceKey;
 //This sets the score to start at -1.
 var score = -1;
 
+//This is the object which runs the game.
 var mainState = {
 
 	preload: function(){
@@ -14,6 +15,7 @@ var mainState = {
 		game.load.image('ground', 'assets/wallHorizontal.png');
 		game.load.image('obsticle', 'assets/wallVertical.png');
 		//If you'd like to load music files, the format would look like this. game.load.audio('[name of music]', ['[location for music file]']);
+
 	},
 
 	create: function(){
@@ -31,16 +33,16 @@ var mainState = {
 
 		//This sets up a group call platforms. For future functionality we can set all horizontal surfaces to this group.
 		platforms = game.add.group();
-    	platforms.enableBody = true;
+		platforms.enableBody = true;
 
-    	//This creates the ground, and makes it solid object the player will not pass through.
+		//This creates the ground, and makes it solid object the player will not pass through.
 		this.ground = platforms.create(0, game.world.height, 'ground');
 		this.ground.anchor.setTo(0,1);
-    	this.ground.scale.setTo(4, 1);
+		this.ground.scale.setTo(4, 1);
 		game.physics.arcade.enable(this.ground);
-    	this.ground.body.immovable = true;
+		this.ground.body.immovable = true;
 
-    	//This creates the player character at the bottom left side of the screen.
+		//This creates the player character at the bottom left side of the screen.
 		this.player = game.add.sprite(game.width/8, game.world.height*(7/8), 'player');
 		game.physics.arcade.enable(this.player);
 
@@ -49,9 +51,9 @@ var mainState = {
 
 		//This sets the physics on the player in terms of the gravity and the bounce.
 		this.player.body.bounce.y = 0.2;
-	    this.player.body.gravity.y = 600;
+		this.player.body.gravity.y = 600;
 
-	    //This creates the first obsticle on the right side of the screen.
+		//This creates the first obsticle on the right side of the screen.
 		this.obsticle = game.add.sprite(700,game.world.height, 'obsticle');
 		this.obsticle.scale.setTo(1,0.2);
 		this.obsticle.anchor.setTo(0,1);
@@ -59,7 +61,7 @@ var mainState = {
 		this.obsticle.body.immovable = true;
 
 		//This adds the scoreboard on the top left side of the screen.
-    	scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+		scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 	},
 
 	update: function(){
@@ -69,9 +71,9 @@ var mainState = {
 		game.physics.arcade.collide(this.player, this.obsticle);
 
 		//This will set the horizontal movement to zero.
-    	this.player.body.velocity.x = 0;
+		this.player.body.velocity.x = 0;
 
-    	//This will create a new wall if the old wall goes off the screen.
+		//This will create a new wall if the old wall goes off the screen.
 		if (this.obsticle.x < 0) {
 			this.obsticle.kill();
 			this.obsticle = game.add.sprite(900,game.world.height, 'obsticle');
@@ -94,11 +96,11 @@ var mainState = {
 
 		//This allows the player to jump only if you press the space key and the player is touching the something at the bottom.
 		if (this.spaceKey.isDown && this.player.body.touching.down){
-        	this.player.body.velocity.y = -300;
-        	//This is a good place to add the sound for when the player jumps.
-    	};
+			this.player.body.velocity.y = -300;
+			//This is a good place to add the sound for when the player jumps.
+		};
 
-    	//This will update the score if the player has not been pushed off the screen, and the wall has gone off the left side.
+		//This will update the score if the player has not been pushed off the screen, and the wall has gone off the left side.
 		if (this.obsticle.x < 5 && this.player.x > 5){
 			score++;
 			scoreText.text = 'score: ' + score;
