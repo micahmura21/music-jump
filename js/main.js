@@ -13,6 +13,7 @@ var mainState = {
 		game.load.image('player', 'assets/player.png');
 		game.load.image('ground', 'assets/wallHorizontal.png');
 		game.load.image('obsticle', 'assets/wallVertical.png');
+		//If you'd like to load music files, the format would look like this. game.load.audio('[name of music]', ['[location for music file]']);
 	},
 
 	create: function(){
@@ -25,6 +26,8 @@ var mainState = {
 
 		//This gives us sharp corners for all of our images.
 		game.renderer.renderSession.roundPixels = true;
+
+		//This would be a good place to start the general background music for the game.
 
 		//This sets up a group call platforms. For future functionality we can set all horizontal surfaces to this group.
 		platforms = game.add.group();
@@ -78,6 +81,12 @@ var mainState = {
 			this.obsticle.body.immovable = true;
 		};
 
+		//This creates a place to add sound when the obsticle reaches the player.
+		if (this.obsticle.x < game.width/8) {
+			console.log("sound!");
+			//This is where you'd add a sound que when the obsticle reaches the player.
+		}
+
 		//This will move the obsticle to the left if it is on the right side of the screen.
 		if (this.obsticle.x > 600) {
 			this.obsticle.x -= 0.05;
@@ -86,6 +95,7 @@ var mainState = {
 		//This allows the player to jump only if you press the space key and the player is touching the something at the bottom.
 		if (this.spaceKey.isDown && this.player.body.touching.down){
         	this.player.body.velocity.y = -300;
+        	//This is a good place to add the sound for when the player jumps.
     	};
 
     	//This will update the score if the player has not been pushed off the screen, and the wall has gone off the left side.
@@ -106,6 +116,6 @@ var mainState = {
 //This sets the size of the game screen and sets it to the div "gameDiv".
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
 
-//This starts the game.
+//This starts the game, by running the object "mainState".
 game.state.add('main', mainState);
 game.state.start('main');
