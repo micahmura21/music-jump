@@ -119,3 +119,24 @@ this.obstacle.scale.setTo(1,0.2);
 
 Play around with these numbers to understand the positioning
 
+## Step 8 - Create the Platform for the Player
+
+Your player is floating! We need to create a ground for the player!
+
+Within the **create** function, access the method `add.group()` within the game object and set it equal to `platforms`.
+
+After, use the `create(X_POS, Y_POS, 'NAME_OF_ASSET')` method on add.group() and set this equal to `this.ground`.
+
+You will need to anchor this.ground to the setting, how would you do this?
+
+The ground look so short! So use a method to extend its length!
+
+_Your code should look like this_
+```html
+platforms = game.add.group();
+this.ground = platforms.create(0, GAME_HEIGHT, 'ground');
+this.ground.anchor.setTo(0,1);
+this.ground.scale.setTo(4, 1);
+```
+
+Your game now has a player, a stage, and an obstacle!
