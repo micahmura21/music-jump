@@ -17,7 +17,9 @@ Run a sanity check in your **main.js** file
 
 _Your code should look like this_
 
-```console.log(Phaser)```
+```html
+console.log(Phaser);
+```
 
 You should see this in your Console
 
