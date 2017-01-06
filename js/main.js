@@ -117,7 +117,7 @@ var mainState = {
 
 //This sets the size of the game screen and sets it to the div "gameDiv".
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv');
-
 //This starts the game, by running the object "mainState".
 game.state.add('main', mainState);
+console.log(game);
 game.state.start('main');
