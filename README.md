@@ -21,7 +21,9 @@ _Your code should look like this_
 
 You should see this in your Console
 
-```Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}```
+```html
+Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
+```
 
 ## Step 3 - Set up Phaser Framework
 ```
@@ -43,7 +45,7 @@ var mainState = {
   }
 }
 
-var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.Auto, GAME_CONTAINER_ID)
+var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.Auto, GAME_CONTAINER_ID);
 
 game.state.add('main', mainState);
 game.state.start('main');
