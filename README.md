@@ -1,7 +1,9 @@
 # music-jump
 A music based jumping game made in Phaser
 
-## Step 1
+## Part 1
+
+### Step 1
 
 Import the **script** for the 2 files in your js directory
 
@@ -11,7 +13,7 @@ _Your code should look like this_
   <script type="text/javascript" src="js/main.js"></script>
 ```
 
-## Step 2 - Sanity Check
+### Step 2 - Sanity Check
 
 Run a sanity check in your **main.js** file
 
@@ -27,7 +29,7 @@ You should see this in your Console
 Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 ```
 
-## Step 3 - Set up Phaser Framework
+### Step 3 - Set up Phaser Framework
 ```
 var GAME_WIDTH = 800;
 var GAME_HEIGHT = 600;
@@ -53,7 +55,7 @@ game.state.add('main', mainState);
 game.state.start('main');
 ```
 
-## Step 4 - Create Game Container
+### Step 4 - Create Game Container
 Create the **game container** in the index.html
 
 _Your code should look like this_
@@ -64,7 +66,7 @@ _Your code should look like this_
 This should appear in your console
 ```Phaser v2.6.2 | Pixi.js | WebGL | WebAudio     http://phaser.io ♥♥♥```
 
-## Step 5 - Load the Images
+### Step 5 - Load the Images
 Load an image into Phaser using the method **load.image** in the **game** object.
 
 ```game.load.image('NEW_ASSET_NAME', 'ASSET_FILE_LOCATION');```
@@ -79,7 +81,7 @@ Repeat this for these images:
 + wallHorizontal.png - Set this with the new asset name 'ground'
 + wallVertical.png - Set this with the new asset name 'obstacle'
 
-## Step 6 - Create the Sprite For The Player
+### Step 6 - Create the Sprite For The Player
 Within the **create** function, create the sprite image for the player and set as `this.player` using the method on the game object `add.sprite(START_X_POS, START_Y_POS, 'NAME_OF_SPRITE')`:
 
 ```game.add.sprite(START_X_POS, START_Y_POS, 'NAME_OF_SPRITE');```
@@ -93,7 +95,7 @@ You should have the player on the screen now.
 
 Lets also set the **background color** to `#3498db` so the player isn't in the dark.
 
-## Step 7 - Create the Sprites for the Obstacle
+### Step 7 - Create the Sprites for the Obstacle
 Repeat the previous step with the **obstacles** asset
 
 _Your code should look like this_
@@ -119,7 +121,7 @@ this.obstacle.scale.setTo(1,0.2);
 
 Play around with these numbers to understand the positioning
 
-## Step 8 - Create the Platform for the Player
+### Step 8 - Create the Platform for the Player
 
 Your player is floating! We need to create a ground for the player!
 
