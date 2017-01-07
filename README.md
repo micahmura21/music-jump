@@ -5,7 +5,7 @@ A music based jumping game made in Phaser
 
 ### Step 1 - Reference Executable Script
 
-+ Use the HTML ```<script>```element to reference the executable scripts in your **js** directory.
++ Use the HTML ```<script>``` element to reference the executable scripts in your **js** directory.
 
 + Use the global attributes **type** and **src**
 
@@ -69,7 +69,7 @@ function update(){
 
 };
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv', { preload: preload, create: create });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv', { preload: preload, update: update, create: create });
 
 game.state.start();
 ```
@@ -153,6 +153,7 @@ The ground look so short! So use a method to extend its length!
 ##### Your code should look like this
 ```html
 platforms = game.add.group();
+platforms.enableBody = true;
 ground = platforms.create(0, GAME_HEIGHT, 'ground');
 ground.anchor.setTo(0,1);
 ground.scale.setTo(4, 1);
@@ -162,61 +163,132 @@ Your game now has a player, a stage, and an obstacle!
 
 ##Part 2 - Lets Add Movement!
 
-### Step 1 - Move the Player!
-Create a variable called `INITIAL_MOVESPEED` and set it to a number between 1-10.
+### Step 1 - Set the Physics Engine
+Set the game physics to Arcade style and enable this for the player, ground, and obstacle in the **create** function with:
 
-Within the `create` function, after the creation of the player sprite, initialize the attribute `moveSpeed` on the player and set it to INITIAL_MOVESPEED.
+```game.physics.startSystem(Phaser.Physics.ARCADE);```
+and
+```game.physics.arcade.enable(sprite);```
 
-Set the value of `spaceKey` on `this` to the **game** method `input.keyboard.addKey(Phaser.Keyboard.KEY)`.
+Also, you must ensure the obstacle and ground are immovable after enabling arcade mode on the body of each sprite as follows:
 
-Replace `KEY` with `SPACEBAR`.
+```sprite.body.immovable = true;```
 
-_Your code should look like this_
+The game engine recognizes collision between the player and the ground or the obstacle in the **update** function, as follows:
+
+```game.physics.arcade.collide(sprite1, sprite2);```
+
+##### Your code should look like this
+
+**main.js**
+
 ```html
-this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+function create(){
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  game.physics.arcade.enable(player);
+
+  game.physics.arcade.enable(ground);
+  ground.body.immovable = true;
+
+  game.physics.arcade.enable(obstacle);
+  obstacle.body.immovable = true;
+}
+
+function update(){
+  game.physics.arcade.collide(player, ground);
+  game.physics.arcade.collide(player, obstacle);
+}
 ```
 
-And, in the **update** function, create an if statement to handle this and change the players y to -0.1.
+### Step 2 - Move the Player!
+Create a variable called `INITIAL_MOVESPEED` and set it to a number between 1-10.
 
-_Your code should look like this_
+Within the **create** function, after the creation of the player sprite, initialize the attribute `moveSpeed` on the player and set it to INITIAL_MOVESPEED.
+
+Set the value of `spaceKey` to register the key after the space bar has been pressed.
+
+Also, set the physics on the player in terms of the gravity and the bounce in the **create** function.
+
+And, in the **update** function, create an if statement to handle this and change the players y to -300.
+
+##### Your code should look like this
 ```html
-  update: function(){
-    if (this.spaceKey.isDown) {
-      this.player.y = -0.1;
+function create(){
+  //This sets the spacebar key as the input for this game.
+  spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+  //This sets the physics on the player in terms of the gravity and the bounce.
+  player.body.bounce.y = 0.2;
+  player.body.gravity.y = 600;
+}
+```
+
+```html
+  function update(){
+    //This allows the player to jump only if you press the space key and the player is touching the something at the bottom.
+    if (spaceKey.isDown && player.body.touching.down) {
+      player.body.velocity.y = -300;
     }
   }
 ```
 
 Your character is able to jump!
 
-In a very weird way :O !
+### Step 3 - Make the obstacle move!
 
-### Step 2 Add "Bounce" to player!
-We want the character to jump with a bounce as he just teleports to the top of the screen!
+In the **update** function, we will need to simply move the obstacle to the left if it is on the right side of the screen by decreasing its x position.
 
-We need to add the physics engine of Phaser to our code.
-
-Input this code at the beginning of the **create** function:
+##### Your code should look like this
 ```html
-game.physics.startSystem(Phaser.Physics.ARCADE);
+if (obstacle.x > 600) {
+  obstacle.x -= 0.05;
+};
 ```
 
-This sets the game physics to arcade style.
+Test this out! Don't forget to jump!
 
-After the area you created the ground, enable the game physics arcade with this command and pass the instantiaion of ground as a parameter:
+### Step 4 - Create a new wall if the old wall goes off the screen.
 
-```game.physics.arcade.enable(this.ground);```
+In the **update** function, we need to recreate the obstacle if it's off the screen!
 
-Also, we want the ground to be solid so the player doesn't fall through it on landing.
+##### Your code should look like this
+```html
+if (obstacle.x < 0) {
+  obstacle.kill();
+  obstacle = game.add.sprite(900, GAME_HEIGHT, 'obstacle');
+  obstacle.scale.setTo(1,0.2);
+  obstacle.anchor.setTo(0,1);
+  game.physics.arcade.enable(obstacle);
+  obstacle.body.immovable = true;
+};
+```
 
-```this.ground.body.immovable = true;```
+### Step 5 - Create a score!
 
-Lets enable the game physics arcade for the player and obstacle.
+Add a scoreboard on the top left side of the screen using the `game.add.text` method and update it whenever the player jumps over the obstacle!
 
-Lets give the player a bit of a bounce with:
+##### Your code should look like this
 
-this.player.body.bounce.y = 0.2;
+**create**
+```html
+scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+```
 
-And change what happens to the player when spacebar is entered within the update function:
+**update**
+```html
+//This will update the score if the player has not been pushed off the screen, and the wall has gone off the left side.
+  if (obstacle.x < 5 && player.x > 5){
+    score++;
+    scoreText.text = 'score: ' + score;
+  };
+//This will tell you "You Lose!" if the player is pushed off the left side of the screen.
+  if (player.x < 0){
+    scoreText = game.add.text(350,200, 'You Lose!', {fill: '#ff0000'});
+    obstacle.kill();
+    player.kill();
+  };
+```
 
-And add the `physics.arcade.collide` between the objects that are coming in contact
+### YOU'RE DONE!
+
+Enjoy your game! Can you add sound when your player jumps? :)
