@@ -44,10 +44,19 @@ Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 **main.js**
 
 ```html
+var spaceKey;
+var ground;
+var player;
+var obstacle;
+
+var score = -1;
+
+
 var GAME_WIDTH = 800;
 var GAME_HEIGHT = 600;
 var GAME_CONTAINER_ID = 'gameDiv';
 
+//This is the object which runs the game.
 function preload(){
 
 },
@@ -83,10 +92,13 @@ This should appear in your console
 Use the game load operation to load an image file:
 
 **In the preload()**
+
 The first parameter is a unique key and the second is a url path
+
 ```game.load.image('imageKey', 'assets/fileName.png');```
 
 Then add the sprite image in the **create** function
+
 ```game.add.sprite(X_POS, Y_POS, 'imageKey');```
 
 Use this to add the player sprite to the game.
@@ -95,6 +107,12 @@ Load these images:
 + player.png - Set the image key to 'player'
 + wallHorizontal.png - Set the image key to 'ground'
 + wallVertical.png - Set the image key to 'obstacle'
+
+We need to also **anchor** these sprites to the screen. We will use the sprite method `anchor.setTo(X_POS, Y_POS)` for this.
+
+Your player should now be facing a gigantic obstacle.
+
+Lets configure the obstacle to not be so scary with the sprite method `scale.setTo(X_LENGTH, Y_LENGTH)`. The `X_LENGTH` and `Y_LENGTH` are from values 0, 1 with 1 being the original length.
 
 ##### Your code should look like this
 
@@ -109,38 +127,16 @@ function preload(){
 }
 
 function create() {
-  game.add.sprite(game.width/8, game.world.height*(7/8), 'player');
-  game.add.sprite(700,game.world.height, 'obstacle');
+  player = game.add.sprite(game.width/8, game.world.height*(7/8), 'player');
+  obstacle = game.add.sprite(700,game.world.height, 'obstacle');
+  obstacle.scale.setTo(1,0.2);
+  obstacle.anchor.setTo(0,1);
 }
 ```
 
-Lets also set the **background color** to `#3498db` so the player isn't in the dark.
-
-### Step 6 - Create the Sprites for the Obstacle
-Repeat the previous step with the **obstacles** asset
-
-_Your code should look like this_
-```html
-this.obstacle = game.add.sprite(700,600, 'obstacle');
-```
-
-We need to also **anchor** this sprite to the screen. We will use the sprite method `anchor.setTo(X_POS, Y_POS)` for this.
-
-_Your code could look like this_
-```html
-this.obstacle.anchor.setTo(0,1);
-```
-
-Your player should now be facing a gigantic obstacle.
-
-Lets configure the obstacle to not be so scary with the sprite method `scale.setTo(X_LENGTH, Y_LENGTH)`. The `X_LENGTH` and `Y_LENGTH` are from values 0, 1 with 1 being the original length.
-
-_Your code could look like this_
-```html
-this.obstacle.scale.setTo(1,0.2);
-```
-
 Play around with these numbers to understand the positioning
+
+Lets also set the game stage **background color** to `#3498db` so the player isn't in the dark.
 
 ### Step 8 - Create the Platform for the Player
 
@@ -208,9 +204,11 @@ game.physics.startSystem(Phaser.Physics.ARCADE);
 This sets the game physics to arcade style.
 
 After the area you created the ground, enable the game physics arcade with this command and pass the instantiaion of ground as a parameter:
+
 ```game.physics.arcade.enable(this.ground);```
 
 Also, we want the ground to be solid so the player doesn't fall through it on landing.
+
 ```this.ground.body.immovable = true;```
 
 Lets enable the game physics arcade for the player and obstacle.
