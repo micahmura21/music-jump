@@ -17,6 +17,8 @@ A music based jumping game made in Phaser
   <script type="text/javascript" src="js/main.js"></script>
 ```
 
+***Commit your code!***
+
 ### Step 2 - Sanity Check
 
 In the **main.js** file, output the game object **Phaser** to the Web Console.
@@ -34,6 +36,8 @@ console.log(Phaser);
 ```html
 Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 ```
+
+***Commit your code!***
 
 ### Step 3 - Set up Phaser Framework
 
@@ -74,6 +78,8 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv', { preload: preload,
 game.state.start();
 ```
 
+***Commit your code!***
+
 ### Step 4 - Create Game Container
 Create the **game container** in the index.html
 
@@ -87,6 +93,8 @@ Create the **game container** in the index.html
 
 This should appear in your console
 ```Phaser v2.6.2 | Pixi.js | WebGL | WebAudio     http://phaser.io ♥♥♥```
+
+***Commit your code!***
 
 ### Step 5 - Load the Images
 Use the game load operation to load an image file:
@@ -138,6 +146,8 @@ Play around with these numbers to understand the positioning
 
 Lets also set the game stage **background color** to `#3498db` so the player isn't in the dark.
 
+***Commit your code!***
+
 ### Step 8 - Create the Platform for the Player
 
 Your player is floating! We need to create a ground for the player!
@@ -146,7 +156,7 @@ Within the **create** function, access the method `add.group()` within the game 
 
 After, use the `create(X_POS, Y_POS, 'NAME_OF_ASSET')` method on add.group() and set this equal to `ground`.
 
-You will need to anchor this.ground to the setting, how would you do this?
+You will need to anchor ground to the setting, how would you do this?
 
 The ground look so short! So use a method to extend its length!
 
@@ -160,6 +170,8 @@ ground.scale.setTo(4, 1);
 ```
 
 Your game now has a player, a stage, and an obstacle!
+
+***Commit your code!***
 
 ##Part 2 - Lets Add Movement!
 
@@ -206,6 +218,8 @@ function update(){
 }
 ```
 
+***Commit your code!***
+
 ### Step 2 - Move the Player!
 Create a variable called `INITIAL_MOVESPEED` and set it to a number between 1-10.
 
@@ -240,6 +254,8 @@ function create(){
 
 Your character is able to jump!
 
+***Commit your code!***
+
 ### Step 3 - Make the obstacle move!
 
 In the **update** function, we will need to simply move the obstacle to the left if it is on the right side of the screen by decreasing its x position.
@@ -252,6 +268,8 @@ if (obstacle.x > 600) {
 ```
 
 Test this out! Don't forget to jump!
+
+***Commit your code!***
 
 ### Step 4 - Create a new wall if the old wall goes off the screen.
 
@@ -268,6 +286,8 @@ if (obstacle.x < 0) {
   obstacle.body.immovable = true;
 };
 ```
+
+***Commit your code!***
 
 ### Step 5 - Create a score!
 
@@ -294,6 +314,8 @@ scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }
     player.kill();
   };
 ```
+
+***Commit your code!***
 
 ### YOU'RE DONE!
 
