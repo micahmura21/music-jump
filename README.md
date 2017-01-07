@@ -48,11 +48,14 @@ Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 **main.js**
 
 ```html
+//This sets the variable for the spacebar.
 var spaceKey;
+
 var ground;
 var player;
 var obstacle;
 
+//This sets the score to start at -1.
 var score = -1;
 
 
@@ -128,14 +131,21 @@ Lets configure the obstacle to not be so scary with the sprite method `scale.set
 
 ```html
 function preload(){
+
+//These four things sets the assets for the game. If you want to add music or images, there is where you would preload it.
   game.load.image('background', 'assets/background.png');
   game.load.image('player', 'assets/player.png');
   game.load.image('ground', 'assets/wallHorizontal.png');
   game.load.image('obstacle', 'assets/wallVertical.png');
+
+  //If you'd like to load music files, the format would look like  game.load.audio('[name of music]', ['[location for music file]']);
 }
 
 function create() {
+  //This creates the player character at the bottom left side of the screen.
   player = game.add.sprite(game.width/8, game.world.height*(7/8), 'player');
+
+  //This creates the first obstacle on the right side of the screen.
   obstacle = game.add.sprite(700,game.world.height, 'obstacle');
   obstacle.scale.setTo(1,0.2);
   obstacle.anchor.setTo(0,1);
@@ -162,8 +172,11 @@ The ground look so short! So use a method to extend its length!
 
 ##### Your code should look like this
 ```html
+//This sets up a group call platforms. For future functionality we can set all horizontal surfaces to this group.
 platforms = game.add.group();
 platforms.enableBody = true;
+
+//This creates the ground, and makes it solid object the player will not pass through.
 ground = platforms.create(0, GAME_HEIGHT, 'ground');
 ground.anchor.setTo(0,1);
 ground.scale.setTo(4, 1);
@@ -202,6 +215,7 @@ The game engine recognizes collision between the player and the ground or the ob
 
 ```html
 function create(){
+  //This sets the game physics to Arcade style.
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.physics.arcade.enable(player);
 
@@ -213,6 +227,7 @@ function create(){
 }
 
 function update(){
+  //This is where the game engine recognizes collision betwen the player and the ground or the obstacle.
   game.physics.arcade.collide(player, ground);
   game.physics.arcade.collide(player, obstacle);
 }
@@ -262,6 +277,7 @@ In the **update** function, we will need to simply move the obstacle to the left
 
 ##### Your code should look like this
 ```html
+//This creates a place to add sound when the obstacle reaches the player.
 if (obstacle.x > 600) {
   obstacle.x -= 0.05;
 };
@@ -277,6 +293,7 @@ In the **update** function, we need to recreate the obstacle if it's off the scr
 
 ##### Your code should look like this
 ```html
+//This will create a new wall if the old wall goes off the screen.
 if (obstacle.x < 0) {
   obstacle.kill();
   obstacle = game.add.sprite(900, GAME_HEIGHT, 'obstacle');
@@ -297,6 +314,7 @@ Add a scoreboard on the top left side of the screen using the `game.add.text` me
 
 **create**
 ```html
+//This adds the scoreboard on the top left side of the screen.
 scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 ```
 
