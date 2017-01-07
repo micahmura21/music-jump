@@ -144,18 +144,18 @@ Your player is floating! We need to create a ground for the player!
 
 Within the **create** function, access the method `add.group()` within the game object and set it equal to `platforms`.
 
-After, use the `create(X_POS, Y_POS, 'NAME_OF_ASSET')` method on add.group() and set this equal to `this.ground`.
+After, use the `create(X_POS, Y_POS, 'NAME_OF_ASSET')` method on add.group() and set this equal to `ground`.
 
 You will need to anchor this.ground to the setting, how would you do this?
 
 The ground look so short! So use a method to extend its length!
 
-##### Your code should look like this_
+##### Your code should look like this
 ```html
 platforms = game.add.group();
-this.ground = platforms.create(0, GAME_HEIGHT, 'ground');
-this.ground.anchor.setTo(0,1);
-this.ground.scale.setTo(4, 1);
+ground = platforms.create(0, GAME_HEIGHT, 'ground');
+ground.anchor.setTo(0,1);
+ground.scale.setTo(4, 1);
 ```
 
 Your game now has a player, a stage, and an obstacle!
