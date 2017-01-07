@@ -1,13 +1,17 @@
 # music-jump
 A music based jumping game made in Phaser
 
-## Part 1
+## Part 1 - Lets Display the Graphics!
 
-### Step 1
+### Step 1 - Reference Executable Script
 
-Import the **script** for the 2 files in your js directory
++ Use the HTML ```html<script>```element to reference the executable scripts in your **js** directory.
 
-_Your code should look like this_
++ Use the global attributes **type** and **src**
+
+##### Your code should look like this
+
+**index.html**
 ```html
   <script type="text/javascript" src="js/phaser.min.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
@@ -15,22 +19,29 @@ _Your code should look like this_
 
 ### Step 2 - Sanity Check
 
-Run a sanity check in your **main.js** file
+In the **main.js** file, output the game object **Phaser** to the Web Console.
 
-_Your code should look like this_
+##### Your code should look like this
 
-```html
-console.log(Phaser);
-```
+**main.js**
 
-You should see this in your Console
+```console.log(Phaser);```
+
+**Console**
 
 ```html
 Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 ```
 
 ### Step 3 - Set up Phaser Framework
-```
+
++ You will be instantiating the Phaser.State functions (preload, create, update, and render) and set the game width, height, and element container id.in the **main.js** file
+
+##### Your code should look like this
+
+**main.js**
+
+```html
 var GAME_WIDTH = 800;
 var GAME_HEIGHT = 600;
 var GAME_CONTAINER_ID = 'gameDiv';
@@ -58,7 +69,10 @@ game.state.start('main');
 ### Step 4 - Create Game Container
 Create the **game container** in the index.html
 
-_Your code should look like this_
+##### Your code should look like this
+
+**index.html**
+
 ```html
 <div id="gameDiv"> </div>
 ```
@@ -142,3 +156,62 @@ this.ground.scale.setTo(4, 1);
 ```
 
 Your game now has a player, a stage, and an obstacle!
+
+##Part 2 - Lets Add Movement!
+
+### Step 1 - Move the Player!
+Create a variable called `INITIAL_MOVESPEED` and set it to a number between 1-10.
+
+Within the `create` function, after the creation of the player sprite, initialize the attribute `moveSpeed` on the player and set it to INITIAL_MOVESPEED.
+
+Set the value of `spaceKey` on `this` to the **game** method `input.keyboard.addKey(Phaser.Keyboard.KEY)`.
+
+Replace `KEY` with `SPACEBAR`.
+
+_Your code should look like this_
+```html
+this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+```
+
+And, in the **update** function, create an if statement to handle this and change the players y to -0.1.
+
+_Your code should look like this_
+```html
+  update: function(){
+    if (this.spaceKey.isDown) {
+      this.player.y = -0.1;
+    }
+  }
+```
+
+Your character is able to jump!
+
+In a very weird way :O !
+
+### Step 2 Add "Bounce" to player!
+We want the character to jump with a bounce as he just teleports to the top of the screen!
+
+We need to add the physics engine of Phaser to our code.
+
+Input this code at the beginning of the **create** function:
+```html
+game.physics.startSystem(Phaser.Physics.ARCADE);
+```
+
+This sets the game physics to arcade style.
+
+After the area you created the ground, enable the game physics arcade with this command and pass the instantiaion of ground as a parameter:
+```game.physics.arcade.enable(this.ground);```
+
+Also, we want the ground to be solid so the player doesn't fall through it on landing.
+```this.ground.body.immovable = true;```
+
+Lets enable the game physics arcade for the player and obstacle.
+
+Lets give the player a bit of a bounce with:
+
+this.player.body.bounce.y = 0.2;
+
+And change what happens to the player when spacebar is entered within the update function:
+
+And add the `physics.arcade.collide` between the objects that are coming in contact
