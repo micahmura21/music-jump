@@ -1,5 +1,5 @@
 # music-jump
-A music based jumping game made in Phaser
+A music based jumping game made in [Phaser](http://phaser.io/)
 
 ## Part 1 - Lets Display the Graphics!
 
@@ -39,7 +39,7 @@ Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 
 ***Commit your code!***
 
-### Step 3 - Set up Phaser Framework
+### Step 3 - [Set up Phaser Framework](https://phaser.io/tutorials/making-your-first-phaser-game/index)
 
 + You will be instantiating the Phaser.State functions (preload, create, update, and render) and set the game width, height, and element container id.in the **main.js** file
 
@@ -99,7 +99,7 @@ This should appear in your console
 
 ***Commit your code!***
 
-### Step 5 - Load the Images
+### Step 5 - [Load the Images](https://phaser.io/tutorials/making-your-first-phaser-game/part2)
 Use the game load operation to load an image file:
 
 **In the preload()**
@@ -158,11 +158,11 @@ Lets also set the game stage **background color** to `#3498db` so the player isn
 
 ***Commit your code!***
 
-### Step 8 - Create the Platform for the Player
+### Step 8 - [Create the Platform for the Player](https://phaser.io/tutorials/making-your-first-phaser-game/part3)
 
 Your player is floating! We need to create a ground for the player!
 
-Within the **create** function, access the method `add.group()` within the game object and set it equal to `platforms`.
+Within the **create** function, access the method [add.group()](https://phaser.io/tutorials/making-your-first-phaser-game/part4) within the game object and set it equal to `platforms`.
 
 After, use the `create(X_POS, Y_POS, 'NAME_OF_ASSET')` method on add.group() and set this equal to `ground`.
 
@@ -188,7 +188,7 @@ Your game now has a player, a stage, and an obstacle!
 
 ##Part 2 - Lets Add Movement!
 
-### Step 1 - Set the Physics Engine
+### Step 1 - [Set the Physics Engine](https://phaser.io/tutorials/making-your-first-phaser-game/part5)
 Set the game physics to Arcade style and enable this for the player, ground, and obstacle in the **create** function with:
 
 ```html
@@ -235,7 +235,7 @@ function update(){
 
 ***Commit your code!***
 
-### Step 2 - Move the Player!
+### Step 2 - [Move the Player!](https://phaser.io/tutorials/making-your-first-phaser-game/part6)
 Create a variable called `INITIAL_MOVESPEED` and set it to a number between 1-10.
 
 Within the **create** function, after the creation of the player sprite, initialize the attribute `moveSpeed` on the player and set it to INITIAL_MOVESPEED.
@@ -306,7 +306,7 @@ if (obstacle.x < 0) {
 
 ***Commit your code!***
 
-### Step 5 - Create a score!
+### Step 5 - [Create a score!](https://phaser.io/tutorials/making-your-first-phaser-game/part8)
 
 Add a scoreboard on the top left side of the screen using the `game.add.text` method and update it whenever the player jumps over the obstacle!
 
