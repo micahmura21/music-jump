@@ -5,11 +5,11 @@ A music based jumping game made in Phaser
 
 ### Step 1 - Reference Executable Script
 
-+ Use the HTML ```html<script>```element to reference the executable scripts in your **js** directory.
++ Use the HTML ```<script>```element to reference the executable scripts in your **js** directory.
 
 + Use the global attributes **type** and **src**
 
-##### Your code should look like this
+#### Your code should look like this
 
 **index.html**
 ```html
@@ -21,11 +21,13 @@ A music based jumping game made in Phaser
 
 In the **main.js** file, output the game object **Phaser** to the Web Console.
 
-##### Your code should look like this
+#### Your code should look like this
 
 **main.js**
 
-```console.log(Phaser);```
+```html
+console.log(Phaser);
+```
 
 **Console**
 
@@ -37,7 +39,7 @@ Object {VERSION: "2.6.2", GAMES: Array[0], AUTO: 0, CANVAS: 1, WEBGL: 2…}
 
 + You will be instantiating the Phaser.State functions (preload, create, update, and render) and set the game width, height, and element container id.in the **main.js** file
 
-##### Your code should look like this
+#### Your code should look like this
 
 **main.js**
 
@@ -46,30 +48,27 @@ var GAME_WIDTH = 800;
 var GAME_HEIGHT = 600;
 var GAME_CONTAINER_ID = 'gameDiv';
 
-var mainState = {
-  preload: function(){
+function preload(){
 
-  },
+},
 
-  create: function(){
+function create(){
 
-  },
+};
 
-  update: function(){
+function update(){
 
-  }
-}
+};
 
-var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.Auto, GAME_CONTAINER_ID);
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv', { preload: preload, create: create });
 
-game.state.add('main', mainState);
-game.state.start('main');
+game.state.start();
 ```
 
 ### Step 4 - Create Game Container
 Create the **game container** in the index.html
 
-##### Your code should look like this
+#### Your code should look like this
 
 **index.html**
 
@@ -81,35 +80,43 @@ This should appear in your console
 ```Phaser v2.6.2 | Pixi.js | WebGL | WebAudio     http://phaser.io ♥♥♥```
 
 ### Step 5 - Load the Images
-Load an image into Phaser using the method **load.image** in the **game** object.
+Use the game load operation to load an image file:
 
-```game.load.image('NEW_ASSET_NAME', 'ASSET_FILE_LOCATION');```
+**In the preload()**
+The first parameter is a unique key and the second is a url path
+```game.load.image('imageKey', 'assets/fileName.png');```
 
-_Your code should look like this for the first asset_
+Then add the sprite image in the **create** function
+```game.add.sprite(X_POS, Y_POS, 'imageKey');```
+
+Use this to add the player sprite to the game.
+
+Load these images:
++ player.png - Set the image key to 'player'
++ wallHorizontal.png - Set the image key to 'ground'
++ wallVertical.png - Set the image key to 'obstacle'
+
+##### Your code should look like this
+
+**main.js**
+
 ```html
-game.load.image('background', 'assets/background.png');
+function preload(){
+  game.load.image('background', 'assets/background.png');
+  game.load.image('player', 'assets/player.png');
+  game.load.image('ground', 'assets/wallHorizontal.png');
+  game.load.image('obstacle', 'assets/wallVertical.png');
+}
+
+function create() {
+  game.add.sprite(game.width/8, game.world.height*(7/8), 'player');
+  game.add.sprite(700,game.world.height, 'obstacle');
+}
 ```
-
-Repeat this for these images:
-+ player.png - Set this with the new asset name 'player'
-+ wallHorizontal.png - Set this with the new asset name 'ground'
-+ wallVertical.png - Set this with the new asset name 'obstacle'
-
-### Step 6 - Create the Sprite For The Player
-Within the **create** function, create the sprite image for the player and set as `this.player` using the method on the game object `add.sprite(START_X_POS, START_Y_POS, 'NAME_OF_SPRITE')`:
-
-```game.add.sprite(START_X_POS, START_Y_POS, 'NAME_OF_SPRITE');```
-
-_Your code should look like this_
-```html
-this.player = game.add.sprite(GAME_WIDTH/8, GAME_HEIGHT*(7/8), 'player');
-```
-
-You should have the player on the screen now.
 
 Lets also set the **background color** to `#3498db` so the player isn't in the dark.
 
-### Step 7 - Create the Sprites for the Obstacle
+### Step 6 - Create the Sprites for the Obstacle
 Repeat the previous step with the **obstacles** asset
 
 _Your code should look like this_
@@ -147,7 +154,7 @@ You will need to anchor this.ground to the setting, how would you do this?
 
 The ground look so short! So use a method to extend its length!
 
-_Your code should look like this_
+##### Your code should look like this_
 ```html
 platforms = game.add.group();
 this.ground = platforms.create(0, GAME_HEIGHT, 'ground');
