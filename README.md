@@ -166,9 +166,15 @@ Your game now has a player, a stage, and an obstacle!
 ### Step 1 - Set the Physics Engine
 Set the game physics to Arcade style and enable this for the player, ground, and obstacle in the **create** function with:
 
-```game.physics.startSystem(Phaser.Physics.ARCADE);```
+```html
+game.physics.startSystem(Phaser.Physics.ARCADE);
+```
+
 and
-```game.physics.arcade.enable(sprite);```
+
+```html
+game.physics.arcade.enable(sprite);
+```
 
 Also, you must ensure the obstacle and ground are immovable after enabling arcade mode on the body of each sprite as follows:
 
